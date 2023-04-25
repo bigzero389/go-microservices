@@ -21,7 +21,16 @@ func main() {
 	server()
 }
 
+// func server() {
+// 	http.HandleFunc("/helloworld", helloWorldHandler)
+
+// 	log.Printf("Server starting on port %v\n", port)
+// 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
+// }
 func server() {
+	cathandler := http.FileServer(http.Dir("./images"))
+	http.Handle("/cat/", http.StripPrefix("/cat/", cathandler))
+
 	http.HandleFunc("/helloworld", helloWorldHandler)
 
 	log.Printf("Server starting on port %v\n", port)
